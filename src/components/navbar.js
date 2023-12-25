@@ -11,7 +11,7 @@ function Nav() {
      <span>hello Mr {}</span> 
 </Navbar.Brand>
 
-      <div className="flex md:order-">
+      <div className="flex md:order-4">
         <Dropdown
           arrowIcon={false}
           inline
