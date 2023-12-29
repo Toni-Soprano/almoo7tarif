@@ -1,55 +1,22 @@
-import React from 'react'
-import {
-    createBrowserRouter,
-    Outlet,
-    RouterProvider,
-    ScrollRestoration,
-} from 'react-router-dom'
-import NavbarComponent  from './cmmons/navbar'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LoginForm from "./auth/login";
+import SingupForm  from './auth/signup'
 import Home from './components/home'
-import LoginForm from './auth/login'
-import SignupForm from './auth/signup'
-
-const Layout = () => {
-    return (
-        <div >
-            <NavbarComponent   />
-            <ScrollRestoration />
-            <Outlet />
-             
-        </div>
-    )
-}
-const router = createBrowserRouter([
-    {
-        path: '/',
-        element: <Layout />,
-        children: [
-            {
-                path: '/',
-                element: <Home />,
-             
-            },
-           
-           
-            {
-                path: '/login',
-                element: <LoginForm />,
-            },
-            {
-                path: '/signup',
-                element: <SignupForm />,
-            },
-        ],
-    },
-])
-
-function App() {
-    return (
-        <div className="font-bodyFont">
-            <RouterProvider router={router} />
-        </div>
-    )
+ 
+ function App() {
+  return (
+   
+    <BrowserRouter>
+  
+      <Routes>
+        <Route path="/" element={<LoginForm />} />
+        <Route path="/home" element={<Home/>}/>
+        <Route path="/signup" element={<SingupForm />} />
+      </Routes>
+     
+    </BrowserRouter>
+    
+  );
 }
 
-export default App
+export default App;
