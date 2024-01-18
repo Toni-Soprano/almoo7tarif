@@ -1,191 +1,219 @@
-import React, { useState } from 'react';
-import {Link} from 'react-router-dom'
-import { FaUser, FaLock, FaPhone } from 'react-icons/fa';
-import { IoMdMail } from 'react-icons/io';
+import { useState, useContext } from "react";
+import axios from "axios";
+import {
+  FaUser,
+  FaCalendarAlt,
+  FaPhone,
+  FaTransgender,
+  FaCamera,
+} from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { UserProvider, useUser } from "./UserContext"; // Import UserContext
 
 const SignupForm = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [birthday, setBirthday] = useState('');
-  const [gender, setGender] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [photo, setPhoto] = useState(null);
+  const [nom, setNom] = useState("");
+  const [prenom, setPrenom] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [tel, setTel] = useState("");
+  const [date_naissance, setDateNaissance] = useState("");
+  const [genre, setGenre] = useState("");
+  const [profilePicture, setProfilePicture] = useState(null);
+  const navigate = useNavigate();
+  const { setUser } = useUser(); // Fix useContext to useUser
 
-  const handlePhotoChange = (e) => {
-    const file = e.target.files[0];
-    setPhoto(file);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const formData = new FormData();
+      formData.append("nom", nom);
+      formData.append("prenom", prenom);
+      formData.append("email", email);
+      formData.append("mdp", password);
+      formData.append("tel", tel);
+      formData.append("date_naissance", date_naissance);
+      formData.append("genre", genre);
+      formData.append("profilePicture", profilePicture);
+
+      const response = await axios.post(
+        "http://localhost:3900/api/RegistreUser",
+        formData
+      );
+
+      if (response.data.user) {
+        console.log("Signup successful");
+        setUser(response.data.user); // Set user in context
+        console.log("User data:", response.data.user.nom);
+        navigate("/home");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error...",
+          text: "User already exists with this email!",
+        });
+      }
+    } catch (error) {
+      console.error("Signup error:", error);
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add your signup logic here
+  const handleFileChange = (e) => {
+    setProfilePicture(e.target.files[0]);
   };
 
   return (
-    <div className="container-fluid bg-blue-800">
-    <div className="row">
-      {/* Form on the left */}
-      <div className="col-md-6 d-flex align-items-center justify-content-center">
-        <div className="card p-4" style={{ width: '20rem' }}>
-          {/* Logo */}
-          <div className="mb-3 text-center">
-            <img src="/assets/img/logo.png" alt="Logo" className=" ml-10"  style={{ height: '180px' }} />
-          </div>
-          <h1 className="text-center text-dark mb-4">Sign Up</h1>
-            <form onSubmit={handleSubmit}>
-              <div className="mb-3">
-                <label htmlFor="firstName" className="form-label text-dark">
-                  First Name
-                </label>
-                <input
-                  type="text"
-                  id="firstName"
-                  className="form-control"
-                  placeholder="First Name"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  required
-                />
-              </div>
-
-              <div className="mb-3">
-                <label htmlFor="lastName" className="form-label text-dark">
-                  Last Name
-                </label>
-                <input
-                  type="text"
-                  id="lastName"
-                  className="form-control"
-                  placeholder="Last Name"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                  required
-                />
-              </div>
-
-              <div className="mb-3">
-                <label htmlFor="email" className="form-label text-dark">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  className="form-control"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-                <IoMdMail className="mt-2" />
-              </div>
-
-              <div className="mb-3">
-                <label htmlFor="phoneNumber" className="form-label text-dark">
-                  Phone Number
-                </label>
-                <input
-                  type="tel"
-                  id="phoneNumber"
-                  className="form-control"
-                  placeholder="Phone Number"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                  required
-                />
-                <FaPhone className="mt-2" />
-              </div>
-
-              <div className="mb-3">
-                <label htmlFor="birthday" className="form-label text-dark">
-                  Birthday
-                </label>
-                <input
-                  type="date"
-                  id="birthday"
-                  className="form-control"
-                  value={birthday}
-                  onChange={(e) => setBirthday(e.target.value)}
-                  required
-                />
-              </div>
-
-              <div className="mb-3">
-                <label htmlFor="gender" className="form-label text-dark">
-                  Gender
-                </label>
-                <select
-                  id="gender"
-                  className="form-select"
-                  value={gender}
-                  onChange={(e) => setGender(e.target.value)}
-                  required
-                >
-                  <option value="" disabled>Select your gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-
-              <div className="mb-3">
-                <label htmlFor="password" className="form-label text-dark">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  className="form-control"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-                <FaLock className="mt-2" />
-              </div>
-
-              <div className="mb-3">
-                <label htmlFor="confirmPassword" className="form-label text-dark">
-                  Confirm Password
-                </label>
-                <input
-                  type="password"
-                  id="confirmPassword"
-                  className="form-control"
-                  placeholder="Confirm Password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  required
-                />
-                <FaLock className="mt-2" />
-              </div>
-
-              <div className="mb-3">
-                <label htmlFor="photo" className="form-label text-dark">
-                  Photo
-                </label>
-                <input
-                  type="file"
-                  id="photo"
-                  accept="image/*"
-                  onChange={handlePhotoChange}
-                  className="form-control"
-                />
-              </div>
-
-              <Link to="/home" className="btn bg-primary w-100 hover:bg-secondary">
-  Sign up
-</Link>
-            </form>
+    <section className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-blue-400 via-blue-700 to-blue-1000">
+      <div className="bg-gradient-to-r from-blue-400 via-blue-700 to-blue-1000 flex flex-col md:flex-row rounded-2xl shadow-lg p-5 items-center">
+        <div className="md:w-1/2 w-full mr-8">
+          <div className="rounded-2xl border-4 border-white overflow-hidden">
+            <img
+              className="w-full"
+              src="assets/img/paaaaaaaaaaaa-removebg-preview.png"
+              alt="Signup Image"
+            />
           </div>
         </div>
 
-        {/* Background covering the entire right side */}
-        <div className="col-md-6 p-0" style={{ backgroundImage: 'url(/assets/img/plumber-thinking.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', height: 'auto' }}></div>
+        <div className="md:w-1/2 px-4 md:px-8 text-center flex flex-col bg-white bg-opacity-90 rounded-2xl">
+          <img
+            className="h-auto mx-auto"
+            src="assets/img/logo.png"
+            alt="Logo"
+          />
+
+          <h1 className="font-bold text-2xl text-[#002D74] uppercase">
+            SIGN UP
+          </h1>
+
+          <p className="text-xs text-[#002D74]">
+            If you are not a member yet, sign up now
+          </p>
+
+          <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+            <input
+              className="p-2 rounded-xl border"
+              type="text"
+              name="nom"
+              placeholder="Nom"
+              value={nom}
+              onChange={(e) => setNom(e.target.value)}
+            />
+
+            <input
+              className="p-2 rounded-xl border"
+              type="text"
+              name="prenom"
+              placeholder="Prenom"
+              value={prenom}
+              onChange={(e) => setPrenom(e.target.value)}
+            />
+
+            <input
+              className="p-2 rounded-xl border"
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+
+            <div className="relative">
+              <input
+                className="p-2 rounded-xl border w-full"
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <FaUser className="absolute top-1/2 right-3 -translate-y-1/2" />
+            </div>
+
+            <input
+              className="p-2 rounded-xl border"
+              type="tel"
+              name="tel"
+              placeholder="Phone Number"
+              value={tel}
+              onChange={(e) => setTel(e.target.value)}
+            />
+
+            <input
+              className="p-2 rounded-xl border"
+              type="date"
+              name="date_naissance"
+              placeholder="Date of Birth"
+              value={date_naissance}
+              onChange={(e) => setDateNaissance(e.target.value)}
+            />
+
+            <div className="relative">
+              <select
+                className="p-2 rounded-xl border w-full"
+                name="genre"
+                value={genre}
+                onChange={(e) => setGenre(e.target.value)}
+              >
+                <option value="" disabled>
+                  Select Gender
+                </option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+              <FaTransgender className="absolute top-1/2 right-3 -translate-y-1/2" />
+            </div>
+
+            <div className="flex flex-col mb-4">
+              <label
+                htmlFor="profilePicture"
+                className="text-sm text-gray-600 mb-1"
+              >
+                Profile Picture
+              </label>
+              <div className="flex items-center gap-2">
+                <label
+                  htmlFor="profilePicture"
+                  className="cursor-pointer p-3 rounded-lg border bg-gray-200 hover:bg-gray-300"
+                >
+                  <FaCamera />
+                </label>
+                <input
+                  type="file"
+                  id="profilePicture"
+                  name="profilePicture"
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  onChange={handleFileChange}
+                />
+                {profilePicture && (
+                  <span className="text-gray-500">{profilePicture.name}</span>
+                )}
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              className="bg-[#002D74] rounded-xl text-white py-2 hover:scale-105 duration-300"
+            >
+              Sign Up
+            </button>
+          </form>
+
+          <div className="mt-8 md:mt-16 grid grid-cols-3 items-center text-gray-400">
+            <hr className="border-gray-400" />
+            <p className="text-center text-sm">OR</p>
+            <hr className="border-gray-400" />
+          </div>
+
+          <button className="bg-white border py-2 w-full rounded-xl mt-4 md:mt-8 flex justify-center items-center text-sm hover:scale-105 duration-300 text-[#002D74]">
+            <Link to="/login">Log In</Link>
+          </button>
+
+          <div className="flex-grow"></div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -1,11 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import { MDBCol } from "mdbreact";
+import { CiSearch } from "react-icons/ci";
 
 const SearchPage = () => {
+  const [isSearchBarVisible, setIsSearchBarVisible] = useState(false);
+
+  const toggleSearchBar = () => {
+    setIsSearchBarVisible(!isSearchBarVisible);
+  };
+
   return (
     <MDBCol md="6">
-      <div className="active-pink-3 active-pink-4 mb-4">
-        <input className="form-control" type="text" placeholder="Search" aria-label="Search" />
+      <div className="relative">
+        <div className={`flex items-center ${isSearchBarVisible ? 'justify-start' : 'justify-center'}`}>
+          {!isSearchBarVisible && (
+            <div className="rounded-full bg-blue-400 p-2 flex items-center">
+              <CiSearch
+                className={` text-blue-900 w-6 h-6 cursor-pointer transition-all duration-500 ease-out`}
+                onClick={toggleSearchBar}
+              />
+              <span className={`ml-2 `}>
+                Search
+              </span>
+            </div>
+          )}
+          <div className={`relative w-full  ${isSearchBarVisible ? 'opacity-100 transition-opacity duration-500' : 'opacity-0 hidden'}`}>
+            <input
+              className={`form-control w-full pl-10 `}
+              type="text"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            {isSearchBarVisible && (
+              <CiSearch
+                className={`absolute left-2 top-2 text-blue-900 w-6 h-6 cursor-pointer `}
+                onClick={toggleSearchBar}
+              />
+            )}
+          </div>
+        </div>
       </div>
     </MDBCol>
   );

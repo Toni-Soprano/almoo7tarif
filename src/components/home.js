@@ -1,39 +1,47 @@
 import React from "react";
 import SearchPage from "./SearchPage";
-import NavbarComponent from "../cmmons/navbar";
-import CarouselComponent from "./carousel";
+import Component from "../cmmons/navbar";
+import HorizontalCard from './card';
+import { UserProvider } from '../auth/UserContext';
 
 function Home() {
-  const carouselItems = [
+  const cardData = [
     {
-      imageUrl: "/assets/img/plumber-making-phone-gesture.jpg",
-      altText: "Logo 1",
-      captionTitle: "Caption Title 1",
-      captionText: "Caption Text 1",
+      imageUrl: '/assets/img/elect1.jpg',
+      title: 'Card 1',
+      description: 'Some quick example text for Card 1.',
     },
     {
-      imageUrl: "/assets/img/logo.png",
-      altText: "Logo 2",
-      captionTitle: "Caption Title 2",
-      captionText: "Caption Text 2",
+      imageUrl: '/assets/img/elect2.jpg',
+      title: 'Card 2',
+      description: 'Some quick example text for Card 2.',
     },
-    // Add more items as needed
+    {
+      imageUrl: 'https://tecdn.b-cdn.net/img/new/standard/nature/188.jpg',
+      title: 'Card 3',
+      description: 'Some quick example text for Card 3.',
+    },
   ];
 
   return (
-    <div style={{ 
-      backgroundImage: 'linear-gradient(to bottom, #007BFF, #00BFFF)', // Blue gradient colors
-      padding: '20px',
-      minHeight: '100vh',
-    }}>
+    <div className="p-4 min-h-screen">
       <div>
-        <NavbarComponent />
+      <UserProvider>
+        <Component />
+        </UserProvider>
       </div>
-      <div className="d-flex justify-content-center mt-5">
+      <div className="flex justify-center mt-2">
         <SearchPage />
       </div>
-      <div className="d-flex justify-content-center">
-        <CarouselComponent items={carouselItems} />
+      <div className="flex flex-wrap justify-center space-x-4 m-10">
+        {cardData.map((card, index) => (
+          <HorizontalCard
+            key={index}
+            imageUrl={card.imageUrl}
+            title={card.title}
+            description={card.description}
+          />
+        ))}
       </div>
     </div>
   );

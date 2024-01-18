@@ -1,52 +1,38 @@
-/*import Figure from 'react-bootstrap/Figure';
 import React from 'react';
+import { TERipple } from 'tw-elements-react';
 
-function FigureExample() {
+export function HorizontalCard({ imageUrl, title, description }) {
   return (
-    <Figure className="text-center bg-primary p-3">
-      <Figure.Image
-        className="bg-white p-2 rounded-lg"
-        width={150} // Adjust the width to make the logo smaller
-        height={150} // Adjust the height accordingly
-        alt="171x180"
-        src="/assets/img/logo.png"
-        style={{ margin: 'auto' }}
-      />
-      <Figure.Caption className="text-white">
-        Nulla vitae elit libero, a pharetra augue mollis interdum.
-        If you want to make the logo smaller while keeping the overall size of the Figure the same, you can adjust the size of the Figure.Image without changing the size of the Figure. Here's an example:
-      </Figure.Caption>
-    </Figure>
+    <div className="block rounded-lg overflow-hidden bg-white shadow-lg dark:bg-neutral-700">
+      <TERipple>
+        <div className="relative overflow-hidden">
+          <img
+            className="object-cover w-full h-40 " // Adjust the height as needed
+            src={imageUrl}
+            alt=""
+          />
+          <a href="#!">
+            <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
+          </a>
+        </div>
+      </TERipple>
+      <div className="p-6">
+        <h5 className="mb-2 text-xl font-semibold leading-tight text-neutral-800 dark:text-neutral-50">
+          {title}
+        </h5>
+        <p className="mb-4 text-base text-neutral-600 dark:text-neutral-200">
+          {description}
+        </p>
+        <TERipple>
+          <button
+            type="button"
+            className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-md transition duration-300 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 active:bg-primary-700 dark:shadow-md dark:hover:shadow-lg dark:focus:shadow-lg dark:active:shadow-lg">
+            Button
+          </button>
+        </TERipple>
+      </div>
+    </div>
   );
 }
 
-export default FigureExample;*/
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import Image from 'react-bootstrap/Image';
-import Row from 'react-bootstrap/Row';
-import React from 'react';
-
-function ShapeExample() {
-  return (
-    <Container>
-      <Row className="justify-content-center">
-        <Col xs={10} md={6} className="text-center">
-        <h1 style={{ fontSize: '2.5rem', color: '#333', marginBottom: '20px' }}>Welcome to al :
-        </h1>
-        
-        <h2></h2>
-        </Col>
-      </Row>
-      <Row className="justify-content-center">
-        <Col xs={10} md={6} className="d-flex align-items-center justify-content-center">
-          <Image src="/assets/img/logo.png" rounded className='h-auto' style={{ width: '50%' }} />
-        </Col>
-      </Row>
-    </Container>
-  );
-}
-
-export default ShapeExample;
-
-
+export default HorizontalCard;
