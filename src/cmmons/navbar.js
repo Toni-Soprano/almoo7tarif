@@ -1,3 +1,8 @@
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { getCurrentUser } from '../auth/authService';
+
 import {
   Avatar,
   Dropdown,
@@ -10,29 +15,40 @@ import {
   NavbarLink,
   NavbarToggle,
 } from "flowbite-react";
-import { Link } from "react-router-dom";
-import { useUser } from '../auth/UserContext'; // Import useUser
 
 function Component() {
-  const { user } = useUser(); // Access user from UserContext
-  console.log("User data:", user);
-  return (
-   
+  const [userData, setUserData] = useState(null);
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const user = getCurrentUser();
+
+        if (user) {
+          const response = await axios.post('http://localhost:3900/api/GetSingleUser', { userId: user.id });
+          setUserData(response.data.user);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+ 
+  return (
     <Navbar fluid rounded>
-      
-      <NavbarBrand href="/home">
+      <NavbarBrand href="/home" className="flex items-center">
         <img
           src="assets/img/logo.png"
           className="mr-3 w-24"
           alt="Flowbite React Logo"
         />
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-          Welcome, {user ? user.nom : ""}  {/* Display user's name */}
+          Welcome, {userData ? userData.nom : ""}
         </span>
-        
       </NavbarBrand>
-      
+
       <div className="flex md:order-2 items-center">
         <Dropdown
           arrowIcon={false}
@@ -44,11 +60,14 @@ function Component() {
               rounded
             />
           }
+          className="ml-3" // Add margin to separate it from NavbarBrand
         >
           <DropdownHeader>
-            <span className="block text-sm">{user ? `${user.nom} ${user.prenom}` : ''}</span>
+            <span className="block text-sm">
+              {userData ? `${userData.nom} ${userData.prenom}` : ""}
+            </span>
             <span className="block truncate text-sm font-medium">
-              {user ? user.email : ''}
+              {userData ? userData.email : ""}
             </span>
           </DropdownHeader>
           <DropdownItem>Dashboard</DropdownItem>
@@ -63,15 +82,24 @@ function Component() {
         <NavbarToggle />
       </div>
       <NavbarCollapse className="mb-3">
-        <NavbarLink href="#" active>
+        <NavbarLink href="#" active className="hover:text-blue-700">
           Home
         </NavbarLink>
-        <NavbarLink href="#">About</NavbarLink>
-        <NavbarLink href="#">Services</NavbarLink>
-        <NavbarLink href="#">Pricing</NavbarLink>
-        <NavbarLink href="#">Contact</NavbarLink>
+        <NavbarLink href="#" className="hover:text-blue-700">
+          About
+        </NavbarLink>
+        <NavbarLink href="#" className="hover:text-blue-700">
+          Services
+        </NavbarLink>
+        <NavbarLink href="#" className="hover:text-blue-700">
+          Pricing
+        </NavbarLink>
+        <NavbarLink href="#" className="hover:text-blue-700">
+          Contact
+        </NavbarLink>
       </NavbarCollapse>
-      <button className="ml-2 bg-blue-500 text-white px-4 py-2 rounded focus:outline-none">
+
+      <button className="ml-2 bg-blue-500 text-white px-4 py-2 rounded focus:outline-none hover:bg-blue-600 hover:text-white">
         + Add a Job
       </button>
     </Navbar>

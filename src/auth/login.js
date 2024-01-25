@@ -3,13 +3,13 @@ import axios from "axios";
 import { FaLock } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { useUser } from './UserContext'; // Import useUser from UserContext
+ 
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { setUser } = useUser(); // Access setUser from UserContext
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,8 +22,7 @@ const LoginForm = () => {
 
       if (response.data.user) {
         console.log("Login successful");
-        setUser(response.data.user); // Set user in context
-        console.log("User data:", response.data.user);
+         
         navigate("/home");
       } else {
         Swal.fire({

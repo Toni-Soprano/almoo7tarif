@@ -9,7 +9,7 @@ import {
 } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { UserProvider, useUser } from "./UserContext"; // Import UserContext
+ 
 
 const SignupForm = () => {
   const [nom, setNom] = useState("");
@@ -21,7 +21,7 @@ const SignupForm = () => {
   const [genre, setGenre] = useState("");
   const [profilePicture, setProfilePicture] = useState(null);
   const navigate = useNavigate();
-  const { setUser } = useUser(); // Fix useContext to useUser
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,8 +44,7 @@ const SignupForm = () => {
 
       if (response.data.user) {
         console.log("Signup successful");
-        setUser(response.data.user); // Set user in context
-        console.log("User data:", response.data.user.nom);
+         
         navigate("/home");
       } else {
         Swal.fire({
