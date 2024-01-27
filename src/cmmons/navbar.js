@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import { getCurrentUser } from '../auth/authService';
-
+import React from "react";
+import { HashLink as Link } from "react-router-hash-link";
 import {
   Avatar,
   Dropdown,
@@ -15,29 +12,13 @@ import {
   NavbarLink,
   NavbarToggle,
 } from "flowbite-react";
+ 
+ 
+ 
 
 function Component() {
-  const [userData, setUserData] = useState(null);
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const user = getCurrentUser();
-
-        if (user) {
-          const response = await axios.post('http://localhost:3900/api/GetSingleUser', { userId: user.id });
-          setUserData(response.data.user);
-        }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-
-    fetchUserData();
-  }, []);
- 
   return (
-    <Navbar fluid rounded>
+    <Navbar fluid rounded > 
       <NavbarBrand href="/home" className="flex items-center">
         <img
           src="assets/img/logo.png"
@@ -45,7 +26,7 @@ function Component() {
           alt="Flowbite React Logo"
         />
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-          Welcome, {userData ? userData.nom : ""}
+          Welcome,
         </span>
       </NavbarBrand>
 
@@ -63,12 +44,8 @@ function Component() {
           className="ml-3" // Add margin to separate it from NavbarBrand
         >
           <DropdownHeader>
-            <span className="block text-sm">
-              {userData ? `${userData.nom} ${userData.prenom}` : ""}
-            </span>
-            <span className="block truncate text-sm font-medium">
-              {userData ? userData.email : ""}
-            </span>
+            <span className="block text-sm"></span>
+            <span className="block truncate text-sm font-medium"></span>
           </DropdownHeader>
           <DropdownItem>Dashboard</DropdownItem>
           <DropdownItem>Settings</DropdownItem>
@@ -82,21 +59,18 @@ function Component() {
         <NavbarToggle />
       </div>
       <NavbarCollapse className="mb-3">
-        <NavbarLink href="#" active className="hover:text-blue-700">
+        <Link smooth to="#home" className="hover:text-blue-700">
           Home
-        </NavbarLink>
-        <NavbarLink href="#" className="hover:text-blue-700">
-          About
-        </NavbarLink>
-        <NavbarLink href="#" className="hover:text-blue-700">
+        </Link>
+        <Link smooth to="#services" className="hover:text-blue-700">
           Services
-        </NavbarLink>
-        <NavbarLink href="#" className="hover:text-blue-700">
+        </Link>
+        <Link href="#pricing" className="hover:text-blue-700">
           Pricing
-        </NavbarLink>
-        <NavbarLink href="#" className="hover:text-blue-700">
+        </Link>
+        <Link href="#Contact" className="hover:text-blue-700">
           Contact
-        </NavbarLink>
+        </Link>
       </NavbarCollapse>
 
       <button className="ml-2 bg-blue-500 text-white px-4 py-2 rounded focus:outline-none hover:bg-blue-600 hover:text-white">

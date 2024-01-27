@@ -6,5 +6,6 @@ module.exports = {
   },
   plugins: [
     require('flowbite/plugin'),
+    require('@nextui-org/react'),
   ],
 };
