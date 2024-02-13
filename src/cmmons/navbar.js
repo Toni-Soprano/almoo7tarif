@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { HashLink as Link } from "react-router-hash-link";
 import {
   Avatar,
@@ -12,13 +12,13 @@ import {
   NavbarLink,
   NavbarToggle,
 } from "flowbite-react";
- 
- 
- 
 
 function Component() {
+  const result = localStorage.getItem("name");
+  const img=localStorage.getItem("img");
+
   return (
-    <Navbar fluid rounded > 
+    <Navbar fluid rounded>
       <NavbarBrand href="/home" className="flex items-center">
         <img
           src="assets/img/logo.png"
@@ -26,7 +26,7 @@ function Component() {
           alt="Flowbite React Logo"
         />
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-          Welcome,
+          Welcome,{result}
         </span>
       </NavbarBrand>
 
@@ -37,7 +37,7 @@ function Component() {
           label={
             <Avatar
               alt="User settings"
-              img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+              img={img.png}
               rounded
             />
           }
@@ -72,7 +72,7 @@ function Component() {
           Contact
         </Link>
       </NavbarCollapse>
-
+      <h3></h3>
       <button className="ml-2 bg-blue-500 text-white px-4 py-2 rounded focus:outline-none hover:bg-blue-600 hover:text-white">
         + Add a Job
       </button>

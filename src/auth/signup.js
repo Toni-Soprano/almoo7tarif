@@ -35,7 +35,7 @@ const SignupForm = () => {
       formData.append("tel", tel);
       formData.append("date_naissance", date_naissance);
       formData.append("genre", genre);
-      formData.append("profilePicture", profilePicture);
+      formData.append("image", profilePicture);
 
       const response = await axios.post(
         "http://localhost:3900/api/RegistreUser",
@@ -65,7 +65,7 @@ const SignupForm = () => {
   return (
     <section className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-blue-400 via-blue-700 to-blue-1000">
       <div className="bg-gradient-to-r from-blue-400 via-blue-700 to-blue-1000 flex flex-col md:flex-row rounded-2xl shadow-lg p-5 items-center">
-        <div className="md:w-1/2 w-full mr-8">
+        <div className="md:w-1/2 w-full mr-8 ">
           <div className="rounded-2xl border-4 border-white overflow-hidden">
             <img
               className="w-full"
@@ -75,7 +75,7 @@ const SignupForm = () => {
           </div>
         </div>
 
-        <div className="md:w-1/2 px-4 md:px-8 text-center flex flex-col bg-white bg-opacity-90 rounded-2xl">
+        <div className="md:w-1/2 px-4 md:px-4 text-center flex flex-col bg-white bg-opacity-90 rounded-2xl">
           <img
             className="h-auto mx-auto"
             src="assets/img/logo.png"
@@ -90,7 +90,7 @@ const SignupForm = () => {
             If you are not a member yet, sign up now
           </p>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-2 mt-4  ">
             <input
               className="p-2 rounded-xl border"
               type="text"
@@ -173,7 +173,7 @@ const SignupForm = () => {
               <div className="flex items-center gap-2">
                 <label
                   htmlFor="profilePicture"
-                  className="cursor-pointer p-3 rounded-lg border bg-gray-200 hover:bg-gray-300"
+                  className="cursor-pointer p-3  rounded-lg border bg-gray-200 hover:bg-gray-300"
                 >
                   <FaCamera />
                 </label>
@@ -199,17 +199,20 @@ const SignupForm = () => {
             </button>
           </form>
 
-          <div className="mt-8 md:mt-16 grid grid-cols-3 items-center text-gray-400">
+          <div className="mt-4 md:mt-16 grid grid-cols-3 items-center text-gray-400">
             <hr className="border-gray-400" />
             <p className="text-center text-sm">OR</p>
+            
             <hr className="border-gray-400" />
-          </div>
-
-          <button className="bg-white border py-2 w-full rounded-xl mt-4 md:mt-8 flex justify-center items-center text-sm hover:scale-105 duration-300 text-[#002D74]">
+            
+          </div> <div className="flex-grow items-center m-4">
+          <button className="bg-white border py-2 w-full rounded-xl mb-4    items-center text-sm hover:scale-105 duration-300 text-[#002D74]">
             <Link to="/login">Log In</Link>
           </button>
+         
+         
 
-          <div className="flex-grow"></div>
+         </div>
         </div>
       </div>
     </section>

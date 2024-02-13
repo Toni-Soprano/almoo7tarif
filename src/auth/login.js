@@ -3,13 +3,11 @@ import axios from "axios";
 import { FaLock } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
- 
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,10 +17,12 @@ const LoginForm = () => {
         email,
         password,
       });
-
+      
+        localStorage.setItem("name",response.data.user.nom)
+        localStorage.setItem('img', response.data.user.image)
       if (response.data.user) {
-        console.log("Login successful");
-         
+        console.log("succes");
+       
         navigate("/home");
       } else {
         Swal.fire({
@@ -40,11 +40,12 @@ const LoginForm = () => {
       });
     }
   };
+  
 
   return (
     <section className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-blue-400 via-blue-700 to-blue-1000">
-      <div className="bg-gradient-to-r from-blue-400 via-blue-700 to-blue-1000 flex flex-col md:flex-row rounded-2xl shadow-lg p-5 items-center">
-        <div className="md:w-1/2 w-full mr-8">
+      <div className="bg-gradient-to-r from-blue-400 via-blue-700 to-blue-1000 flex flex-col md:flex-row rounded-2xl shadow-lg p-5  ">
+        <div className="md:w-1/2 w-full mr-8 ">
           <div className="rounded-2xl border-4 border-white overflow-hidden">
             <img
               className="w-full"
@@ -55,11 +56,19 @@ const LoginForm = () => {
         </div>
 
         <div className="md:w-1/2 px-4 md:px-8 text-center flex flex-col bg-white bg-opacity-90 rounded-2xl">
-          <img className="h-auto mx-auto" src="assets/img/logo.png" alt="Logo" />
+          <img
+            className="h-auto mx-auto"
+            src="assets/img/logo.png"
+            alt="Logo"
+          />
 
-          <h1 className="font-bold text-2xl text-[#002D74] uppercase">LOGIN</h1>
+          <h1 className="font-bold P-2  text-2xl text-[#002D74] uppercase">
+            LOGIN
+          </h1>
 
-          <p className="text-xs text-[#002D74]">If you are already a member, log in now</p>
+          <p className="text-xs text-[#002D74] p-2">
+            If you are already a member, log in now
+          </p>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-2">
             <input

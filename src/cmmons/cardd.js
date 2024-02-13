@@ -1,64 +1,50 @@
-import React from "react";
-import {
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
-  MDBCardImage,
-  MDBBtn,
-} from "mdb-react-ui-kit";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import ThemeProvider from "react-bootstrap/ThemeProvider";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-export default function App() {
-  const cardData = [
-    {
-      imageSrc: "assets/img/téléchargement.jpg",
-      title: "التكييف ",
-      text: "Some quick example text for card 1.",
-    },
-    {
-      imageSrc: "assets/img/elect.jpg",
-      title: "الكهرباء",
-      text: "Some quick example text for card 2.",
-    },
-    {
-      imageSrc: "assets/img/plumber-making-phone-gesture.jpg",
-      title: "السباكة",
-      text: "Some quick example text for card 3.",
-    },
-    {
-      imageSrc: "assets/img/babysitting-job.png",
-      title: "عناية أطفال",
-      text: "Some quick example text for card 4.",
-    },
-    {
-      imageSrc: "assets/img/téléchargement (1).jpg",
-      title: "إعانة منزلية",
-      text: "Some quick example text for card 5.",
-    },
-    // Add more card data as needed
-  ];
+function BasicExample() {
+  const [services, setServices] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    axios
+      .post("http://localhost:3900/api/GetAllServices")
+      .then((res) => {
+        setServices(res.data.results);
+      })
+      .catch((err) => {
+        setError(err);
+      });
+  }, []);
 
   return (
-    <div className="grid grid-cols-3 gap-8 ml-20 p-20">
-      {cardData.map((card, index) => (
-        <MDBCard key={index} className="w-64 h-100">
-          <MDBCardImage
-            src={card.imageSrc}
-            position="top"
-            alt="Card image"
-            className="w-64 h-64"
+    <div className="grid grid-cols-3 gap-4">
+      {services.map((service) => (
+        <Card key={service._id} style={{ width: "18rem" }}>
+          <Card.Img
+            variant="top"
+            src={`http://localhost:3900/Public/uploads/${service.coverURI}`}
+            alt={service.title}
+            className="w-100 h-64 border border-black"
           />
-          <MDBCardBody>
-            <MDBCardTitle className="p-1 text-center border border-zinc-600 rounded cursor-pointer bg-blue-200">
-              {card.title}
-            </MDBCardTitle>
-            <MDBCardText className="p-2">{card.text}</MDBCardText>
+          <Card.Body>
+            <Card.Title className="p-1 text-center border border-zinc-600 rounded cursor-pointer bg-blue-200">
+              {service.nom_FR}
+            </Card.Title>
+            <Card.Text className="p-2">{service.Description}</Card.Text>
             <div className="d-flex justify-content-center">
-              <MDBBtn href="#">اطلب الان!</MDBBtn>
+              <Button variant="info">اطلب الان!</Button>
             </div>
-          </MDBCardBody>
-        </MDBCard>
+          </Card.Body>
+        </Card>
       ))}
     </div>
   );
 }
+
+export default BasicExample;
