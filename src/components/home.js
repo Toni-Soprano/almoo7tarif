@@ -1,9 +1,9 @@
-import React, { useState , useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import SearchPage from "../cmmons/SearchPage";
 import Component from "../cmmons/navbar";
 import Example from "../cmmons/header";
 import Services from "./services";
-import Pricing from "./pricing";
+ 
 import axios from "axios";
 function Home() {
   const [showBigCard, setShowBigCard] = useState(false);
@@ -17,14 +17,13 @@ function Home() {
       description: "Some quick example text for the big solo card.",
     },
 
-    // Add other small cards as needed
   ];
 
   const handleNavbarLinkClick = (link) => {
     if (link === "about") {
       setShowBigCard(true);
     }
-    // Handle other navbar links as needed
+    
   };
 
   useEffect(() => {
@@ -57,9 +56,7 @@ function Home() {
         <div className="container mx-auto mt-8">
           <Services />
         </div>
-        <div className=" ">
-          <Pricing />
-        </div>
+        
       </div>
     </>
   );

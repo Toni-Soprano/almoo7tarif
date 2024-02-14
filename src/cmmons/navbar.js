@@ -14,8 +14,9 @@ import {
 } from "flowbite-react";
 
 function Component() {
-  const result = localStorage.getItem("name");
-  const img=localStorage.getItem("img");
+  const isLoggedIn = !!localStorage.getItem("name");
+  const userName = localStorage.getItem("name");
+  const userImg = localStorage.getItem("img");
 
   return (
     <Navbar fluid rounded>
@@ -25,36 +26,44 @@ function Component() {
           className="mr-3 w-24"
           alt="Flowbite React Logo"
         />
-        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-          Welcome,{result}
-        </span>
+        {isLoggedIn ? (
+          <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+            Welcome, {userName}
+          </span>
+        ) : (
+          <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+            Welcome, Guest
+          </span>
+        )}
       </NavbarBrand>
 
       <div className="flex md:order-2 items-center">
-        <Dropdown
-          arrowIcon={false}
-          inline
-          label={
-            <Avatar
-              alt="User settings"
-              img={img.png}
-              rounded
-            />
-          }
-          className="ml-3" // Add margin to separate it from NavbarBrand
-        >
-          <DropdownHeader>
-            <span className="block text-sm"></span>
-            <span className="block truncate text-sm font-medium"></span>
-          </DropdownHeader>
-          <DropdownItem>Dashboard</DropdownItem>
-          <DropdownItem>Settings</DropdownItem>
-          <DropdownItem>Earnings</DropdownItem>
-          <DropdownDivider />
-          <DropdownItem>
-            <Link to="/">Sign out</Link>
-          </DropdownItem>
-        </Dropdown>
+        {isLoggedIn ? (
+          <Dropdown
+            arrowIcon={false}
+            inline
+            label={
+              <Avatar alt="User settings" img={userImg} rounded />
+            }
+            className="ml-3"  
+          >
+            <DropdownHeader>
+              <span className="block text-sm"></span>
+              <span className="block truncate text-sm font-medium"></span>
+            </DropdownHeader>
+            <DropdownItem>Dashboard</DropdownItem>
+            <DropdownItem>Settings</DropdownItem>
+            <DropdownItem>Earnings</DropdownItem>
+            <DropdownDivider />
+            <DropdownItem>
+              <Link to="/">Sign out</Link>
+            </DropdownItem>
+          </Dropdown>
+        ) : (
+          <Link smooth to="/login" className="text-white ml-3">
+            Login
+          </Link>
+        )}
 
         <NavbarToggle />
       </div>
@@ -72,10 +81,11 @@ function Component() {
           Contact
         </Link>
       </NavbarCollapse>
-      <h3></h3>
-      <button className="ml-2 bg-blue-500 text-white px-4 py-2 rounded focus:outline-none hover:bg-blue-600 hover:text-white">
-        + Add a Job
-      </button>
+      {isLoggedIn && (
+        <button className="ml-2 bg-blue-500 text-white px-4 py-2 rounded focus:outline-none hover:bg-blue-600 hover:text-white">
+          + Add a Job
+        </button>
+      )}
     </Navbar>
   );
 }
