@@ -84,7 +84,7 @@ function BasicExample() {
                 variant="info"
                 onClick={() => handleOrderNow(service._id)}
               >
-                اطلب الان!
+               ! اطلب الان
               </Button>
             </div>
           </Card.Body>

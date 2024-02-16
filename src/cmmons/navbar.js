@@ -42,17 +42,17 @@ function Component() {
           <Dropdown
             arrowIcon={false}
             inline
-            label={
-              <Avatar alt="User settings" img={userImg} rounded />
-            }
-            className="ml-3"  
+            label={<Avatar alt="User settings" img={userImg} rounded />}
+            className="ml-3"
           >
             <DropdownHeader>
               <span className="block text-sm"></span>
               <span className="block truncate text-sm font-medium"></span>
             </DropdownHeader>
             <DropdownItem>Dashboard</DropdownItem>
-            <DropdownItem>Settings</DropdownItem>
+            <DropdownItem>
+              <Link to="/settings">Settings</Link>
+            </DropdownItem>
             <DropdownItem>Earnings</DropdownItem>
             <DropdownDivider />
             <DropdownItem>
@@ -91,3 +91,32 @@ function Component() {
 }
 
 export default Component;
+
+/*import Container from "react-bootstrap/Container";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
+import Image from "react-bootstrap/Image";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+
+function Component() {
+  const isLoggedIn = !!localStorage.getItem("name");
+  const userName = localStorage.getItem("name");
+  const userImg = localStorage.getItem("img");
+
+  return (
+    <Navbar bg="dark" data-bs-theme="dark">
+      <Container class="d-flex justify-content-center">
+        <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+        <Nav className="">
+          <Nav.Link href="#home">Home</Nav.Link>
+          <Nav.Link href="#features">Features</Nav.Link>
+          <Nav.Link href="#pricing">Pricing</Nav.Link>
+        </Nav>
+        <Image className="" src={userImg} roundedCircle />
+      </Container>
+    </Navbar>
+  );
+}
+
+export default Component;*/
