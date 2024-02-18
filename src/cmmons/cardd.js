@@ -67,15 +67,16 @@ function BasicExample() {
   return (
     <div className="grid grid-cols-3 gap-4">
       {services.map((service) => (
-        <Card key={service._id} style={{ width: "18rem" }}>
+        <Card key={service._id} className="text-center" style={{ width: "18rem" }}>
           <Card.Img
             variant="top"
             src={`http://localhost:3900/Public/uploads/${service.coverURI}`}
             alt={service.title}
             className="w-100 h-64 border border-black"
           />
+          
           <Card.Body>
-            <Card.Title className="p-1 text-center border border-zinc-600 rounded cursor-pointer bg-blue-200">
+            <Card.Title className="p-1 border border-zinc-600 rounded cursor-pointer bg-blue-200">
               {service.nom_FR}
             </Card.Title>
             <Card.Text className="p-2">{service.Description}</Card.Text>
@@ -84,47 +85,46 @@ function BasicExample() {
                 variant="info"
                 onClick={() => handleOrderNow(service._id)}
               >
-               ! اطلب الان
+                اطلب الآن
               </Button>
             </div>
           </Card.Body>
         </Card>
       ))}
 
-      <Modal show={showModal} onHide={handleCloseModal}>
+      <Modal show={showModal} onHide={handleCloseModal} className="text-center">
         <Modal.Header closeButton>
           <Modal.Title>Pricing Details</Modal.Title>
         </Modal.Header>
         {isLoading ? (
           <div className="d-flex align-items-center justify-content-center vh-100">
-            <div class="spinner-border text-primary   " role="status">
-              <span class="sr-only">Loading...</span>
+            <div className="spinner-border text-primary" role="status">
+              <span className="sr-only">Loading...</span>
             </div>
           </div>
         ) : (
           <>
-            <Modal.Body className="border border-black  m-2 cursor-pointer">
+            <Modal.Body className="border border-black m-2 cursor-pointer">
               {sousServices.map((sousService) => (
                 <div
                   key={sousService._id}
                   className={`mb-2 p-2 border ${
                     selectedService === sousService
-                      ? "btn btn-info text-black  "
+                      ? "btn btn-info text-black"
                       : ""
                   }`}
                   onClick={() => handleSelectService(sousService)}
                 >
-                  <p className=""> {sousService.nom_FR}</p>
-                  <p class="text-center p-4 text-blue-600">
+                  <p className="">{sousService.nom_FR}</p>
+                  <p className="text-center p-4 text-blue-600">
                     Prix: {sousService.prix}
                   </p>
                 </div>
               ))}
               {isNext ? (
                 <div className="">
-                  {" "}
-                  <div className=" d-flex align-items-center justify-content-center">
-                    <label className=" " for="meeting-time">
+                  <div className="d-flex align-items-center justify-content-center">
+                    <label htmlFor="meeting-time">
                       Choose a time for your appointment:
                     </label>
                     <input
@@ -137,9 +137,9 @@ function BasicExample() {
                       max="2018-06-14T00:00"
                     />
                   </div>
-                  <div class="input-group mb-2 p-4">
-                    <div class="mt-2 input-group-prepend">
-                      <span class="m-2 p-2" id="inputGroup-sizing-default">
+                  <div className="input-group mb-2 p-4">
+                    <div className="mt-2 input-group-prepend">
+                      <span className="m-2 p-2" id="inputGroup-sizing-default">
                         Ville
                       </span>
                     </div>
@@ -150,28 +150,28 @@ function BasicExample() {
                       aria-describedby="inputGroup-sizing-default"
                     />
                   </div>
-                  <div class="input-group mb-2 p-4">
-                    <div class="mt-2 input-group-prepend">
-                      <span class=" m-2 p-2  " id="inputGroup-sizing-default">
+                  <div className="input-group mb-2 p-4">
+                    <div className="mt-2 input-group-prepend">
+                      <span className="m-2 p-2" id="inputGroup-sizing-default">
                         City
                       </span>
                     </div>
                     <input
                       type="text"
-                      class="form-control"
+                      className="form-control"
                       aria-label="Sizing example input"
                       aria-describedby="inputGroup-sizing-default"
                     />
                   </div>
-                  <div class="input-group mb-2 p-4">
-                    <div class="mt-2 input-group-prepend">
-                      <span class="m-2 p-2" id="inputGroup-sizing-default">
+                  <div className="input-group mb-2 p-4">
+                    <div className="mt-2 input-group-prepend">
+                      <span className="m-2 p-2" id="inputGroup-sizing-default">
                         ZIP
                       </span>
                     </div>
                     <input
                       type="text"
-                      class="form-control"
+                      className="form-control"
                       aria-label="Sizing example input"
                       aria-describedby="inputGroup-sizing-default"
                     />
@@ -190,7 +190,7 @@ function BasicExample() {
               </Button>
               <Button
                 onClick={handleNext}
-                variant="btn btn-primary text-black cursor-pointer "
+                variant="btn btn-primary text-black cursor-pointer"
                 disabled={!selectedService}
               >
                 Next

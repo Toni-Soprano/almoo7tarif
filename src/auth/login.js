@@ -11,7 +11,7 @@ import Row from "react-bootstrap/Row";
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [url, setUrl] =useState('');
+  const [url, setUrl] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -50,9 +50,16 @@ const LoginForm = () => {
 
       if (response.data.msg === "ok") {
         localStorage.setItem("name", response.data.user.nom);
+        localStorage.setItem("id", response.data.user._id);
         localStorage.setItem("img", response.data.user.image);
+        localStorage.setItem("mdp",response.data.user.mdp);
 
         navigate("/home");
+        Swal.fire({
+          title: "Welcome !",
+          text: "User logged in ",
+          icon: "success",
+        });
       }
     } catch (error) {
       console.error("Network error:", error.message);
@@ -91,7 +98,9 @@ const LoginForm = () => {
             alt="Logo"
           />
 
-          <h1 className="font-bold P-2 text-2xl text-white mb-6">Login</h1>
+          <h1 className="font-bold P-2 text-2xl text-white position-relative bottom-8">
+            Login
+          </h1>
 
           <form
             onSubmit={handleSubmit}
@@ -100,7 +109,7 @@ const LoginForm = () => {
             <Row className="m-2">
               <Col>
                 <Form.Control
-                required
+                  required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email"
@@ -110,7 +119,7 @@ const LoginForm = () => {
             <Row className="m-2">
               <Col>
                 <Form.Control
-                required
+                  required
                   type="password"
                   placeholder="Password"
                   value={password}
@@ -128,13 +137,13 @@ const LoginForm = () => {
             </div>
           </form>
 
-          <div className="mt-4 md:mt-8 grid grid-cols-3 items-center text-gray-400">
+          <div className=" position-relative bottom-20 md:mt-8 grid grid-cols-3 items-center text-gray-400">
             <hr className="border-gray-400" />
             <p className="text-center text-sm">OR</p>
             <hr className="border-gray-400" />
           </div>
 
-          <button className="bg-white border py-2 w-full rounded-xl mt-4 md:mt-8 flex justify-center items-center text-sm hover:scale-105 duration-300 text-[#002D74]">
+          <button className="bg-white m-4  position-relative bottom-20  w-40 rounded-xl  py-2 hover:scale-105 duration-300">
             <Link to="/signup">Sign Up</Link>
           </button>
 

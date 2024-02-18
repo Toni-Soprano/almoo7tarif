@@ -23,7 +23,7 @@ const SignupForm = () => {
   const [date_naissance, setDateNaissance] = useState("");
   const [genre, setGenre] = useState("");
   const [profilePicture, setProfilePicture] = useState(null);
- 
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -53,7 +53,7 @@ const SignupForm = () => {
         });
         console.log("Signup successful");
         localStorage.setItem("name", response.data.user.nom);
-        localStorage.setItem("img", response.data.user.image);
+        localStorage.setItem("img", response.data.user.profilePicture);
         navigate("/home");
       }
       if (response.data.msg === "Utilisateur existe") {
@@ -144,7 +144,7 @@ const SignupForm = () => {
             </Row>
             <Row>
               <Col>
-                <Form.Select required defaultValue=" ">
+                <Form.Select value={genre} required defaultValue=" ">
                   <option>Select gender </option>
                   <option>Male</option>
                   <option>Female</option>
@@ -152,7 +152,7 @@ const SignupForm = () => {
                 </Form.Select>
               </Col>
               <Col>
-                <Form.Control placeholder="Birthday" />{" "}
+                <Form.Control value={date_naissance} placeholder="Birthday" />{" "}
               </Col>
             </Row>
             <Row className="m-3">
@@ -168,9 +168,10 @@ const SignupForm = () => {
                   id="profilePicture"
                   name="profilePicture"
                   onChange={handleFileChange}
+                  value={profilePicture}
                 />
                 {profilePicture && (
-                  <span className="text-gray-500">{profilePicture.name}</span>
+                  <span className="text-gray-500">{profilePicture}</span>
                 )}
               </Col>
             </Row>

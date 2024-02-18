@@ -1,12 +1,7 @@
 // Example.js
 import React from 'react';
-
-const links = [
-  { name: 'Open roles', href: '#' },
-  { name: 'Internship program', href: '#' },
-  { name: 'Our values', href: '#' },
-  { name: 'Meet our leadership', href: '#' },
-];
+import SearchPage from './SearchPage'
+ 
 
 const stats = [
   { name: 'Offices worldwide', value: '12' },
@@ -55,12 +50,8 @@ const Example = () => {
           </p>
         </div>
         <div className="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none">
-          <div className="grid grid-cols-1 gap-x-8 gap-y-6 text-base font-semibold leading-7 text-white sm:grid-cols-2 md:flex lg:gap-x-10">
-            {links.map((link) => (
-              <a key={link.name} href={link.href} className="text-center hover:underline hover:text-blue-700 transition duration-300">
-                {link.name} <span aria-hidden="true">&rarr;</span>
-              </a>
-            ))}
+          <div className=" d-flex justify-content-center">
+              <SearchPage/>
           </div>
           <dl className="mt-16 grid grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-2 lg:grid-cols-4">
             {stats.map((stat) => (
