@@ -14,8 +14,11 @@ import {
 } from "flowbite-react";
 
 function Component() {
-  const isLoggedIn = !!localStorage.getItem("name");
-  const userName = localStorage.getItem("name");
+  const logOut = () => {
+        localStorage.removeItem("name");
+        localStorage.removeItem("img");
+  }
+   const userName = localStorage.getItem("name");
   const userImg = localStorage.getItem("img");
 
   return (
@@ -26,7 +29,7 @@ function Component() {
           className="mr-3 w-24"
           alt="Flowbite React Logo"
         />
-        {isLoggedIn ? (
+        {userName ? (
           <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
             Welcome, {userName}
           </span>
@@ -38,11 +41,11 @@ function Component() {
       </NavbarBrand>
 
       <div className="flex md:order-2 items-center">
-        {isLoggedIn ? (
+        {userName ? (
           <Dropdown
             arrowIcon={false}
             inline
-            label={<Avatar alt="User settings" img={userImg} rounded />}
+            label={<Avatar alt="User settings" img={`http://localhost:3900/Public/uploads/${userImg}`} className="mr-4" rounded />}
             className="ml-3"
           >
             <DropdownHeader>
@@ -55,8 +58,8 @@ function Component() {
             </DropdownItem>
             <DropdownItem>Earnings</DropdownItem>
             <DropdownDivider />
-            <DropdownItem>
-              <Link to="/">Sign out</Link>
+            <DropdownItem onClick={logOut}>
+              <Link to="/" >Sign out</Link>
             </DropdownItem>
           </Dropdown>
         ) : (
@@ -81,7 +84,7 @@ function Component() {
           Contact
         </Link>
       </NavbarCollapse>
-      {isLoggedIn && (
+      {userName && (
         <button className="ml-2 bg-blue-500 text-white px-4 py-2 rounded focus:outline-none hover:bg-blue-600 hover:text-white">
           + Add a Job
         </button>

@@ -4,29 +4,32 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/js/dist/dropdown";
 import Profile from "./profile";
 import { Link } from "react-router-dom";
-import Security from "./security"
+import Security from "./security";
 
 function Settings() {
   const [selectedSection, setSelectedSection] = useState("settings");
   return (
-    <div className="container-fluid">
+    <div className="container-fluid   ">
       <div className="row">
-        <div className="bg-black col-auto col-md-2 min-vh-100 d-flex justify-content-between flex-column">
+        <div className=" bg-gradient-to-r from-blue-300 via-blue-800 to-blue-500 col-auto col-md-2 min-vh-100 d-flex justify-content-between flex-column">
           <div>
             <a
               onClick={() => setSelectedSection("settings")}
-              className={`text-decoration-none d-none d-sm-inline text-white d-flex align-items-center justify-content-center ${
+              className={`text-decoration-none d-none d-sm-inline text-white  d-flex align-items-center justify-content-center ${
                 selectedSection === "settings" ? "active" : ""
               }`}
             >
               <span>
                 {" "}
-                <img src="assets/img/logo.png" className="" />
+                <Link to="/home">
+                  {" "}
+                  <img src="assets/img/logo.png" className="mx-auto" />
+                </Link>
               </span>
             </a>
             <hr className="text-secondary p-4" />
-            <ul className="nav nav-pills flex-column">
-              <li className="nav-item text-white fs-4 my-1">
+            <ul className="nav nav-pills  flex-column">
+              <li className="nav-item   fs-4 my-1">
                 <a
                   onClick={() => setSelectedSection("settings")}
                   className={`nav-link text-white fs-4 ${
@@ -91,13 +94,12 @@ function Settings() {
           </div>
         </div>
         <div className="col-md-10">
-          <div className="container">
+          <div className="container  ">
             {selectedSection === "settings" && (
               <p>Settings content goes here</p>
             )}
             {selectedSection === "profile" && <Profile />}
             {selectedSection === "Privacy & Security" && <Security />}
-           
           </div>
         </div>
       </div>

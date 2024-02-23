@@ -22,7 +22,7 @@ const SignupForm = () => {
   const [tel, setTel] = useState("");
   const [date_naissance, setDateNaissance] = useState("");
   const [genre, setGenre] = useState("");
-  const [profilePicture, setProfilePicture] = useState(null);
+  const [profilePicture, setProfilePicture] = useState([]);
 
   const navigate = useNavigate();
 
@@ -144,7 +144,7 @@ const SignupForm = () => {
             </Row>
             <Row>
               <Col>
-                <Form.Select value={genre} required defaultValue=" ">
+                <Form.Select value={genre} onChange={(e) => setGenre(e.target.value)} required defaultValue=" ">
                   <option>Select gender </option>
                   <option>Male</option>
                   <option>Female</option>
@@ -152,7 +152,14 @@ const SignupForm = () => {
                 </Form.Select>
               </Col>
               <Col>
-                <Form.Control value={date_naissance} placeholder="Birthday" />{" "}
+                <Form.Control
+                  required
+                  type="date"
+                  onChange={(e) => setDateNaissance(e.target.value)}
+                  value={date_naissance}
+                  placeholder="Birthday"
+                  className="form-control"
+                />{" "}
               </Col>
             </Row>
             <Row className="m-3">
@@ -167,11 +174,10 @@ const SignupForm = () => {
                   type="file"
                   id="profilePicture"
                   name="profilePicture"
-                  onChange={handleFileChange}
-                  value={profilePicture}
+                  onChange={(e) => setProfilePicture(e.target.files[0])}
                 />
                 {profilePicture && (
-                  <span className="text-gray-500">{profilePicture}</span>
+                  <span className="text-gray-500">{profilePicture.name}</span>
                 )}
               </Col>
             </Row>
